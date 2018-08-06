@@ -1,2 +1,0 @@
-2018-07-30T12:30:28+09:00	apache.access_log	{"domain":"localhost","host":"172.18.0.1","server":"172.18.0.4","ident":"-","user":"-","method":"GET","path":"/index.html","protocol":"HTTP/1.1","status":"200","size":"56","referer":"-","agent":"-","response_time":"20497"}
-2018-07-30T12:30:29+09:00	apache.access_log	{"domain":"localhost","host":"172.18.0.1","server":"172.18.0.4","ident":"-","user":"-","method":"GET","path":"/favicon.ico","protocol":"HTTP/1.1","status":"404","size":"209","referer":"http://localhost:9983/","agent":"-","response_time":"1246"}
