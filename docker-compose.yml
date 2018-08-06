@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  web:
+    build: ./web
+    volumes:
+      - ./web/log:/var/log/apache2
+      - ./web/htdocs:/usr/local/apache2/htdocs
+      - ./web/metricbeat/metricbeat.yml:/etc/metricbeat/metricbeat.yml
+    ports:
+      - 9980-9983:80
+    privileged: true
+    networks:
+      mynw:
+    depends_on: 
+      - elasticsearch
+      - kibana
+
+  flunetd:
+    build: ./fluentd
+    volumes:
+      - ./web/log:/var/log/apache2
+      - ./fluentd/data:/var/log/fluent
+    environment:
+      FLUENTD_CONF: fluent.conf
+    networks:
+      mynw:
+
+  elasticsearch:
+    image: elasticsearch
+    ports:
+      - 9200:9200
+    networks:
+      mynw:
+        ipv4_address: 192.168.1.3
+
+  kibana:
+    image: kibana
+    links:
+      - elasticsearch:elasticsearch
+    ports:
+      - 5601:5601
+    networks:
+      mynw:
+        ipv4_address: 192.168.1.4
+    depends_on:
+      - elasticsearch
+
+networks:
+  mynw:
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+
